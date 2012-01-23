@@ -693,8 +693,6 @@ char* camera_get_parameters(struct camera_device * device)
     // filter picture size
     camParams.set(CameraParameters::KEY_SUPPORTED_PICTURE_SIZES,
                   "3264x2448,2592x1936,2048x1536,1280x960,640x480");
-    camParams.set(CameraParameters::KEY_SUPPORTED_VIDEO_SIZES,
-                  "1280x720,800x480,720x480,640x480,352x288,320x240,176x144");
     camParams.set(CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES,
                   "640x480");
 
