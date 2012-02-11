@@ -67,7 +67,7 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          version_minor: 0,
          id: CAMERA_HARDWARE_MODULE_ID,
          name: "msm7x30 CameraHal Module",
-         author: "Zhibin Wu, Simon Davie",
+         author: "Zhibin Wu, Twisted Playground, Simon Davie",
          methods: &camera_module_methods,
          dso: NULL, /* remove compilation warnings */
          reserved: {0}, /* remove compilation warnings */
@@ -857,6 +857,18 @@ int camera_device_open(const hw_module_t* module, const char* name,
             write(htc_fd, htc_buffer, strlen(htc_buffer));
             close(htc_fd);
         }
+#endif
+
+#if defined(BOARD_USE_REVERSE_FFC)
+        
+        if (cameraId == 1) {
+            CameraParameters camParams;
+            /* Change default parameters for the front camera */
+            camParams = gCameraHals[dev->cameraid]->getParameters();
+            camParams.set("front-camera-mode", "reverse"); // default is "mirror"
+            gCameraHals[dev->cameraid]->setParameters(camParams);
+        }
+        
 #endif
 
         memset(priv_camera_device, 0, sizeof(*priv_camera_device));
